@@ -35,4 +35,10 @@ RUN chmod +x /usr/local/bin/install-php-extensions && sync && \
 
 COPY backend/ /var/www
 
+# Créer un nouvel utilisateur avec votre UID
+RUN useradd -u 1000 -g www-data -m devuser
+
+# Puis faire le chown avec www-data comme groupe
+RUN chown -R 1000:www-data /var/www/html
+
 WORKDIR /var/www

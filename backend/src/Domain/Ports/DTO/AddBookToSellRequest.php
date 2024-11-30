@@ -17,15 +17,15 @@ final readonly class AddBookToSellRequest
         #[Assert\NotBlank]
         public string $author,
 
-        #[Assert\Isbn]
-        public string $isbn,
-
         #[Assert\NotBlank]
         public Condition $condition,
 
         #[Assert\NotBlank]
         #[Assert\PositiveOrZero]
         public int $price,
+
+        #[Assert\Isbn]
+        public ?string $isbn = null,
     ) {
     }
 }

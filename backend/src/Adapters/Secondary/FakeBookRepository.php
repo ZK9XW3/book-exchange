@@ -20,4 +20,9 @@ final class FakeBookRepository implements BookRepositoryInterface
     {
         return $this->books;
     }
+
+    public function getBookById(int $id): Book
+    {
+        return $this->books[$id];
+    }
 }

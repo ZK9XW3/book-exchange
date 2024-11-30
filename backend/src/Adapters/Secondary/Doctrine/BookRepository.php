@@ -28,8 +28,8 @@ class BookRepository extends ServiceEntityRepository implements BookRepositoryIn
             ->setConditionType($book->getCondition())
             ->setPrice($book->getPrice());
 
-        $this->_em->persist($bookDoctrineEntity);
-        $this->_em->flush();
+        $this->getEntityManager()->persist($bookDoctrineEntity);
+        $this->getEntityManager()->flush();
     }
 
     public function getBooks(): array
@@ -47,5 +47,21 @@ class BookRepository extends ServiceEntityRepository implements BookRepositoryIn
         }
 
         return $books;
+    }
+
+    public function getBookById(int $id): Book
+    {
+        $bookDoctrine = $this->find($id);
+        if ($bookDoctrine === null) {
+            throw new \RuntimeException('Book not found');
+        }
+
+        return new Book(
+            $bookDoctrine->getTitle(),
+            $bookDoctrine->getAuthor(),
+            $bookDoctrine->getIsbn(),
+            $bookDoctrine->getConditionType(),
+            $bookDoctrine->getPrice()
+        );
     }
 }

@@ -8,6 +8,7 @@ use App\Domain\Ports\DTO\AddBookToSellRequest;
 use App\Domain\UseCases\AddBookToSell;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
+use Symfony\Component\Routing\Attribute\Route;
 
 final readonly class AddBookToSellController
 {
@@ -15,6 +16,7 @@ final readonly class AddBookToSellController
     {
     }
 
+    #[Route('/add-book-to-sell', name: self::class, methods: ['POST'])]
     public function __invoke(#[MapRequestPayload] AddBookToSellRequest $request): JsonResponse
     {
         $book = ($this->addBookToSell)($request);

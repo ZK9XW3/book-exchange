@@ -3,10 +3,12 @@ export
 
 php:
 	docker exec -ti --user www-data ${PROJECT_NAME}_www bash
+php-root:
+	docker exec -ti --user www-data ${PROJECT_NAME}_www bash
 fix:
-	docker exec -ti ${PROJECT_NAME}_www bash -c "vendor/bin/php-cs-fixer fix src"
+	docker exec -ti --user www-data ${PROJECT_NAME}_www bash -c "vendor/bin/php-cs-fixer fix src"
 test:
-	docker exec -ti ${PROJECT_NAME}_www bash -c "php bin/phpunit"
+	docker exec -ti --user www-data ${PROJECT_NAME}_www bash -c "php bin/phpunit"
 stop:
 	docker-compose stop
 start:

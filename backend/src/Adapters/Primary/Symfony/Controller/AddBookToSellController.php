@@ -24,7 +24,7 @@ final readonly class AddBookToSellController
             'title' => $book->getTitle(),
             'author' => $book->getAuthor(),
             'isbn' => $book->getIsbn(),
-            'condition' => $book->getCondition(),
+            'condition' => $book->getConditionString(),
             'price' => $book->getPrice(),
         ];
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Ports\DTO;
 
+use App\Domain\Enum\Book\Condition;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
@@ -20,7 +21,7 @@ final readonly class AddBookToSellRequest
         public string $isbn,
 
         #[Assert\NotBlank]
-        public string $condition,
+        public Condition $condition,
 
         #[Assert\NotBlank]
         #[Assert\PositiveOrZero]

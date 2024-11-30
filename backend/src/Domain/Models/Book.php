@@ -4,17 +4,19 @@ declare(strict_types=1);
 
 namespace App\Domain\Models;
 
+use App\Domain\Enum\Book\Condition;
+
 final readonly class Book
 {
     public function __construct(
         private string $title,
         private string $author,
         private string $isbn,
-        private string $condition,
+        private Condition $condition,
         private int $price,
     ) {}
 
-    public static function create(string $title, string $author, string $isbn, string $condition, int $price): Book
+    public static function create(string $title, string $author, string $isbn, Condition $condition, int $price): Book
     {
         return new Book($title, $author, $isbn, $condition, $price);
     }
@@ -34,9 +36,9 @@ final readonly class Book
         return $this->isbn;
     }
 
-    public function getCondition(): string
+    public function getConditionString(): string
     {
-        return $this->condition;
+        return $this->condition->value;
     }
 
     public function getPrice(): int

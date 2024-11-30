@@ -3,12 +3,13 @@
 namespace App\Tests\Unit\AddBookToSell;
 
 use App\Adapters\Secondary\FakeBookRepository;
+use App\Domain\Enum\Book\Condition;
 use App\Domain\Models\Book;
 use App\Domain\Ports\DTO\AddBookToSellRequest;
 use App\Domain\UseCases\AddBookToSell;
 use PHPUnit\Framework\TestCase;
 
-class Test extends TestCase
+class AddBookToSellTest extends TestCase
 {
     public function setUp(): void
     {
@@ -16,7 +17,7 @@ class Test extends TestCase
             title: 'Le seigneur des anneaux',
             author: 'J.R.R. Tolkien',
             isbn: '978-2-266-11156-0',
-            condition: 'Comme neuf',
+            condition: Condition::NEW,
             price: 10
         );
 
@@ -32,7 +33,7 @@ class Test extends TestCase
             title: 'Le seigneur des anneaux',
             author: 'J.R.R. Tolkien',
             isbn: '978-2-266-11156-0',
-            condition: 'Comme neuf',
+            condition: Condition::NEW,
             price: 10
         );
 

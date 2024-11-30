@@ -4,7 +4,7 @@ export
 php:
 	docker exec -ti --user www-data ${PROJECT_NAME}_www bash
 php-root:
-	docker exec -ti --user www-data ${PROJECT_NAME}_www bash
+	docker exec -ti ${PROJECT_NAME}_www bash
 fix:
 	docker exec -ti --user www-data ${PROJECT_NAME}_www bash -c "vendor/bin/php-cs-fixer fix src"
 test:

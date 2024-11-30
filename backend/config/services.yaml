@@ -20,5 +20,10 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    App\Domain\Ports\Repository\TransactionRepositoryInterface:
+        class: App\Adapters\Secondary\Doctrine\TransactionRepository
+
+
+when@test:
+    App\Domain\Ports\Repository\TransactionRepositoryInterface:
+        class: App\Adapters\Secondary\FakeTransactionRepository

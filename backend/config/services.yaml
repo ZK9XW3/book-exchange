@@ -23,7 +23,13 @@ services:
     App\Domain\Ports\Repository\TransactionRepositoryInterface:
         class: App\Adapters\Secondary\Doctrine\TransactionRepository
 
+    App\Domain\Ports\Repository\BookRepositoryInterface:
+        class: App\Adapters\Secondary\Doctrine\BookRepository
+
 
 when@test:
     App\Domain\Ports\Repository\TransactionRepositoryInterface:
         class: App\Adapters\Secondary\FakeTransactionRepository
+
+    App\Domain\Ports\Repository\BookRepositoryInterface:
+        class: App\Adapters\Secondary\FakeBookRepository

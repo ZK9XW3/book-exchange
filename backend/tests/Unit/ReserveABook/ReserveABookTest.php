@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Unit\GetBook;
+namespace App\Tests\Unit\ReserveABook;
 
 use App\Adapters\Secondary\FakeTransactionRepository;
 use App\Domain\Models\Transaction;
@@ -8,7 +8,7 @@ use App\Domain\Ports\DTO\ReserveABookRequest;
 use App\Domain\UseCases\ReserveABook;
 use PHPUnit\Framework\TestCase;
 
-class GetBookTest extends TestCase
+class ReserveABookTest extends TestCase
 {
     private ReserveABookRequest $request;
 

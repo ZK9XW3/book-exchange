@@ -45,4 +45,9 @@ final readonly class Book
     {
         return $this->price;
     }
+
+    public function getCondition(): Condition
+    {
+        return $this->condition;
+    }
 }

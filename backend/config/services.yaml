@@ -30,6 +30,9 @@ services:
     App\Domain\Ports\Repository\BookRepositoryInterface:
         class: App\Adapters\Secondary\Doctrine\BookRepository
 
+    App\Domain\Ports\Repository\UserRepositoryInterface:
+        class: App\Adapters\Secondary\Doctrine\UserRepository
+
 
 when@test:
     App\Domain\Ports\Repository\TransactionRepositoryInterface:

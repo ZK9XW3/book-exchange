@@ -25,7 +25,7 @@
 - once the containers are up and running install Symfony :
   - access your php-apache container 
     - `docker exec -it php-container-id-or-name bash` OR `make php`
-    - `composer create-project symfony/skeleton:"7.1.*" .`
+    - `composer createUser-project symfony/skeleton:"7.1.*" .`
 - If you are building a microservice or console app or API you're good to go.
 - If you need the packages for a webApp :
   - `composer require webapp`
@@ -38,7 +38,7 @@
   - change the owner of the www folder
     - `chown -R www-data:www-data www`
 
-- If you can't create a file on your local machine :
+- If you can't createUser a file on your local machine :
   - You might need to change the owner of your backend directory on your local machine too
     - `sudo chown -R $USER:$USER backend`
 

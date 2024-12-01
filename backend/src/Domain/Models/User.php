@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App\Domain\Models;
 
-use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
-final class User
+final readonly class User
 {
     public function __construct(
         private UuidInterface $uuid,
@@ -16,16 +15,16 @@ final class User
         private string $username,
         private string $firstName,
         private string $lastName,
-        private string $streetNumber,
+        private int $streetNumber,
         private string $streetAddress,
         private string $city,
-        private string $zipCode,
+        private int $zipCode,
         private string $country,
     )
     {
     }
 
-    public static function create(UuidInterface $uuid, string $email, string $password, string $username, string $firstname, string $lastname, string $streetNumber, string $streetAddress, string $city, string $zipCode, string $country): User
+    public static function create(UuidInterface $uuid, string $email, string $password, string $username, string $firstname, string $lastname, int $streetNumber, string $streetAddress, string $city, int $zipCode, string $country): User
     {
         return new User(
             uuid: $uuid,
@@ -47,9 +46,53 @@ final class User
         return $this->uuid;
     }
 
-
     public function getEmail(): string
     {
         return $this->email;
+    }
+
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    public function getUsername(): string
+    {
+        return $this->username;
+    }
+
+    public function getFirstname(): string
+    {
+        return $this->firstName;
+    }
+
+    public function getLastname(): string
+    {
+        return $this->lastName;
+    }
+
+    public function getStreetNumber(): int
+    {
+        return $this->streetNumber;
+    }
+
+    public function getStreetAddress(): string
+    {
+        return $this->streetAddress;
+    }
+
+    public function getCity(): string
+    {
+        return $this->city;
+    }
+
+    public function getZipCode(): int
+    {
+        return $this->zipCode;
+    }
+
+    public function getCountry(): string
+    {
+        return $this->country;
     }
 }

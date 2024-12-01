@@ -26,12 +26,12 @@ class CreateUserTest extends TestCase
             email: 'user@gmail.com',
             password: 'secret',
             username: 'firstUser',
-            firstName: 'John',
-            lastName: 'Doe',
-            streetNumber: '1',
+            firstname: 'John',
+            lastname: 'Doe',
+            streetNumber: 1,
             streetAddress: 'rue de la paix',
             city: 'Paris',
-            zipCode: '75000',
+            zipCode: 75000,
             country: 'France'
         );
 
@@ -48,10 +48,10 @@ class CreateUserTest extends TestCase
             username: 'firstUser',
             firstname: 'John',
             lastname: 'Doe',
-            streetNumber: '1',
+            streetNumber: 1,
             streetAddress: 'rue de la paix',
             city: 'Paris',
-            zipCode: '75000',
+            zipCode: 75000,
             country: 'France'
         );
 
@@ -70,10 +70,10 @@ class CreateUserTest extends TestCase
             username: 'firstUser',
             firstname: 'John',
             lastname: 'Doe',
-            streetNumber: '1',
+            streetNumber: 1,
             streetAddress: 'rue de la paix',
             city: 'Paris',
-            zipCode: '75000',
+            zipCode: 75000,
             country: 'France'
         );
 
@@ -87,12 +87,12 @@ class CreateUserTest extends TestCase
             email: 'user@gmail.com',
             password: 'secret',
             username: 'firstUser',
-            firstName: 'Jane',
-            lastName: 'Doe',
-            streetNumber: '2',
+            firstname: 'Jane',
+            lastname: 'Doe',
+            streetNumber: 2,
             streetAddress: 'rue de la paix',
             city: 'Paris',
-            zipCode: '75001',
+            zipCode: 75001,
             country: 'France'
         );
 
@@ -104,7 +104,4 @@ class CreateUserTest extends TestCase
 
         ($createUser)($this->createUserRequest, $this->fakeUuid);
     }
-
-
-
 }

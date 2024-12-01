@@ -10,12 +10,12 @@ final readonly class CreateUserRequest
         public string $email,
         public string $password,
         public string $username,
-        public string $firstName,
-        public string $lastName,
-        public string $streetNumber,
+        public string $firstname,
+        public string $lastname,
+        public int    $streetNumber,
         public string $streetAddress,
         public string $city,
-        public string $zipCode,
+        public int    $zipCode,
         public string $country
     )
     {

@@ -7,6 +7,7 @@ namespace App\Domain\UseCases;
 use App\Domain\Models\Book;
 use App\Domain\Ports\DTO\AddBookToSellRequest;
 use App\Domain\Ports\Repository\BookRepositoryInterface;
+use Ramsey\Uuid\UuidInterface;
 
 final readonly class AddBookToSell
 {
@@ -14,9 +15,10 @@ final readonly class AddBookToSell
     {
     }
 
-    public function __invoke(AddBookToSellRequest $request): Book
+    public function __invoke(AddBookToSellRequest $request, UuidInterface $uuid): Book
     {
         $book = Book::create(
+            uuid: $uuid,
             title: $request->title,
             author: $request->author,
             isbn: $request->isbn,

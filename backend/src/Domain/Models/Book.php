@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace App\Domain\Models;
 
 use App\Domain\Enum\Book\Condition;
+use Ramsey\Uuid\UuidInterface;
 
 final readonly class Book
 {
     public function __construct(
+        private UuidInterface $uuid,
         private string $title,
         private string $author,
         private string $isbn,
@@ -16,9 +18,21 @@ final readonly class Book
         private int $price,
     ) {}
 
-    public static function create(string $title, string $author, string $isbn, Condition $condition, int $price): Book
+    public static function create(UuidInterface $uuid, string $title, string $author, string $isbn, Condition $condition, int $price): Book
     {
-        return new Book($title, $author, $isbn, $condition, $price);
+        return new Book(
+            uuid: $uuid,
+            title: $title,
+            author: $author,
+            isbn: $isbn,
+            condition: $condition,
+            price: $price
+        );
+    }
+
+    public function getUuid(): UuidInterface
+    {
+        return $this->uuid;
     }
 
     public function getTitle(): string

@@ -7,6 +7,7 @@ use App\Domain\Models\Book;
 use App\Domain\Ports\Repository\BookRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Ramsey\Uuid\UuidInterface;
 
 /**
  * @extends ServiceEntityRepository<BookDoctrineEntity>
@@ -22,6 +23,7 @@ class BookRepository extends ServiceEntityRepository implements BookRepositoryIn
     {
         $bookDoctrineEntity = new BookDoctrineEntity();
         $bookDoctrineEntity
+            ->setUuid($book->getUuid())
             ->setTitle($book->getTitle())
             ->setAuthor($book->getAuthor())
             ->setIsbn($book->getIsbn())
@@ -38,6 +40,7 @@ class BookRepository extends ServiceEntityRepository implements BookRepositoryIn
         $books = [];
         foreach ($booksDoctrine as $bookDoctrine) {
             $books[] = new Book(
+                $bookDoctrine->getUuid(),
                 $bookDoctrine->getTitle(),
                 $bookDoctrine->getAuthor(),
                 $bookDoctrine->getIsbn(),
@@ -49,14 +52,15 @@ class BookRepository extends ServiceEntityRepository implements BookRepositoryIn
         return $books;
     }
 
-    public function getBookById(int $id): Book
+    public function getBookByUuid(UuidInterface $uuid): Book
     {
-        $bookDoctrine = $this->find($id);
+        $bookDoctrine = $this->findOneBy(['uuid' => $uuid]);
         if ($bookDoctrine === null) {
             throw new \RuntimeException('Book not found');
         }
 
         return new Book(
+            $bookDoctrine->getUuid(),
             $bookDoctrine->getTitle(),
             $bookDoctrine->getAuthor(),
             $bookDoctrine->getIsbn(),

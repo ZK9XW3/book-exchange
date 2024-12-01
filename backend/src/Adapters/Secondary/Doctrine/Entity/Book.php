@@ -5,6 +5,8 @@ namespace App\Adapters\Secondary\Doctrine\Entity;
 use App\Adapters\Secondary\Doctrine\BookRepository;
 use App\Domain\Enum\Book\Condition;
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\Doctrine\UuidType;
+use Ramsey\Uuid\UuidInterface;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
 class Book
@@ -13,6 +15,9 @@ class Book
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+
+    #[ORM\Column(type: UuidType::NAME)]
+    private UuidInterface $uuid;
 
     #[ORM\Column(length: 255)]
     private ?string $title = null;
@@ -32,6 +37,18 @@ class Book
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getUuid(): UuidInterface
+    {
+        return $this->uuid;
+    }
+
+    public function setUuid(UuidInterface $uuid): static
+    {
+        $this->uuid = $uuid;
+
+        return $this;
     }
 
     public function getTitle(): ?string

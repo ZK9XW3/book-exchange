@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Ports\Repository;
 
 use App\Domain\Models\Book;
+use Ramsey\Uuid\UuidInterface;
 
 interface BookRepositoryInterface
 {
@@ -12,5 +13,5 @@ interface BookRepositoryInterface
 
     public function getBooks(): array;
 
-    public function getBookById(int $id): Book;
+    public function getBookByUuid(UuidInterface $uuid): Book;
 }

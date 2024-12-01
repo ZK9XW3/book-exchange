@@ -14,9 +14,13 @@ class CreateUserTest extends TestCase
 
     public FakeUserRepository $userRepository;
 
+    public string $fakeUuid;
+
     public function setUp(): void
     {
         $this->userRepository = new FakeUserRepository();
+
+        $this->fakeUuid = '13df23da-3adb-4144-89b4-dfcf200feca2';
 
         $this->createUserRequest = new CreateUserRequest(
             email: 'user@gmail.com',
@@ -35,8 +39,6 @@ class CreateUserTest extends TestCase
     public function testCreateAUser(): void
     {
         $createUser = new CreateUser($this->userRepository);
-        $response = $createUser($this->createUserRequest);
-
         $expectedUser = User::create(
             email: 'user@gmail.com',
             password: 'secret',
@@ -49,7 +51,10 @@ class CreateUserTest extends TestCase
             zipCode: '75000',
             country: 'France'
         );
-        $expectedUser->setId(1);
+        $expectedUser->setUuid($this->fakeUuid);
+
+        $response = $createUser->__invoke($this->createUserRequest);
+        $response->setUuid($this->fakeUuid);
 
         $this->assertEquals($expectedUser, $response);
     }
@@ -57,8 +62,6 @@ class CreateUserTest extends TestCase
     public function testCreatesAUserSaveAUser(): void
     {
         $createUser = new CreateUser($this->userRepository);
-        ($createUser)($this->createUserRequest);
-
         $expectedUser = User::create(
             email: 'user@gmail.com',
             password: 'secret',
@@ -71,8 +74,9 @@ class CreateUserTest extends TestCase
             zipCode: '75000',
             country: 'France'
         );
+        $expectedUser->setUuid($this->fakeUuid);
 
-        $expectedUser->setId(1);
+        ($createUser)($this->createUserRequest);
 
         $this->assertEquals($expectedUser, $this->userRepository->getUsers()[0]);
     }
@@ -90,7 +94,6 @@ class CreateUserTest extends TestCase
             zipCode: '75001',
             country: 'France'
         );
-
         $createUser = new CreateUser($this->userRepository);
         ($createUser)($firstUserRequest);
 
@@ -99,7 +102,4 @@ class CreateUserTest extends TestCase
 
         ($createUser)($this->createUserRequest);
     }
-
-
-
 }

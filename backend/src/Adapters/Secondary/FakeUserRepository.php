@@ -13,7 +13,7 @@ final class FakeUserRepository implements UserRepositoryInterface
 
     public function save(User $user): void
     {
-        $user->setId(count($this->users) + 1);
+        $user->setUuid('13df23da-3adb-4144-89b4-dfcf200feca2');
         $this->users[] = $user;
     }
 

@@ -16,7 +16,7 @@ final readonly class CreateUser
 
     public function __invoke(CreateUserRequest $request): User
     {
-        $this->checkForExistingUser($request->email);
+        $this->checkForExistingUserWithEmail($request->email);
 
         $user = User::create(
             email: $request->email,
@@ -36,11 +36,10 @@ final readonly class CreateUser
         return $user;
     }
 
-    private function checkForExistingUser(string $email): void
+    private function checkForExistingUserWithEmail(string $email): void
     {
         if ($this->userRepository->getUserByEmail($email)) {
             throw new \RuntimeException('User already exists with this email');
         }
     }
-
 }

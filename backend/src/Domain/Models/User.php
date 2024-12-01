@@ -4,17 +4,15 @@ declare(strict_types=1);
 
 namespace App\Domain\Models;
 
-use App\Domain\ValueObject\Uuid;
-
 final class User
 {
     public function __construct(
-        private Uuid $uuid,
+        private int $id,
         private string $email,
         private string $password,
         private string $username,
-        private string $firstname,
-        private string $lastname,
+        private string $firstName,
+        private string $lastName,
         private string $streetNumber,
         private string $streetAddress,
         private string $city,
@@ -27,12 +25,12 @@ final class User
     public static function create(string $email, string $password, string $username, string $firstname, string $lastname, string $streetNumber, string $streetAddress, string $city, string $zipCode, string $country): User
     {
         return new User(
-            uuid: Uuid::generate(),
+            id: random_int(0, 100),
             email: $email,
             password: $password,
             username: $username,
-            firstname: $firstname,
-            lastname: $lastname,
+            firstName: $firstname,
+            lastName: $lastname,
             streetNumber: $streetNumber,
             streetAddress: $streetAddress,
             city: $city,
@@ -41,9 +39,9 @@ final class User
         );
     }
 
-    public function setUuid(string $uuid): void
+    public function setId(int $id): void
     {
-        $this->uuid = Uuid::fromString($uuid);
+        $this->id = $id;
     }
 
     public function getEmail(): string

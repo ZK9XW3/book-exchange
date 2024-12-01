@@ -7,6 +7,7 @@ namespace App\Domain\UseCases;
 use App\Domain\Models\User;
 use App\Domain\Ports\DTO\CreateUserRequest;
 use App\Domain\Ports\Repository\UserRepositoryInterface;
+use Ramsey\Uuid\UuidInterface;
 
 final readonly class CreateUser
 {
@@ -14,11 +15,12 @@ final readonly class CreateUser
     {
     }
 
-    public function __invoke(CreateUserRequest $request): User
+    public function __invoke(CreateUserRequest $request, UuidInterface $uuid): User
     {
         $this->checkForExistingUser($request->email);
 
         $user = User::create(
+            uuid: $uuid,
             email: $request->email,
             password: $request->password,
             username: $request->username,

@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace App\Domain\Models;
 
+use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
+
 final class User
 {
     public function __construct(
-        private int $id,
+        private UuidInterface $uuid,
         private string $email,
         private string $password,
         private string $username,
@@ -22,10 +25,10 @@ final class User
     {
     }
 
-    public static function create(string $email, string $password, string $username, string $firstname, string $lastname, string $streetNumber, string $streetAddress, string $city, string $zipCode, string $country): User
+    public static function create(UuidInterface $uuid, string $email, string $password, string $username, string $firstname, string $lastname, string $streetNumber, string $streetAddress, string $city, string $zipCode, string $country): User
     {
         return new User(
-            id: random_int(0, 100),
+            uuid: $uuid,
             email: $email,
             password: $password,
             username: $username,
@@ -39,10 +42,11 @@ final class User
         );
     }
 
-    public function setId(int $id): void
+    public function getUuid(): UuidInterface
     {
-        $this->id = $id;
+        return $this->uuid;
     }
+
 
     public function getEmail(): string
     {

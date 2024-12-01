@@ -7,12 +7,16 @@ use App\Domain\Models\User;
 use App\Domain\Ports\DTO\CreateUserRequest;
 use App\Domain\UseCases\CreateUser;
 use PHPUnit\Framework\TestCase;
+use Ramsey\Uuid\Rfc4122\UuidV4;
+use Ramsey\Uuid\UuidInterface;
 
 class CreateUserTest extends TestCase
 {
     public CreateUserRequest $createUserRequest;
 
     public FakeUserRepository $userRepository;
+
+    private UuidInterface $fakeUuid;
 
     public function setUp(): void
     {
@@ -30,14 +34,15 @@ class CreateUserTest extends TestCase
             zipCode: '75000',
             country: 'France'
         );
+
+        $this->fakeUuid = UuidV4::fromString('d1b3b3b3-3b3b-3b3b-3b3b-3b3b3b3b3b3b');
     }
 
     public function testCreateAUser(): void
     {
         $createUser = new CreateUser($this->userRepository);
-        $response = $createUser($this->createUserRequest);
-
         $expectedUser = User::create(
+            uuid: $this->fakeUuid,
             email: 'user@gmail.com',
             password: 'secret',
             username: 'firstUser',
@@ -49,17 +54,17 @@ class CreateUserTest extends TestCase
             zipCode: '75000',
             country: 'France'
         );
-        $expectedUser->setId(1);
+
+        $response = $createUser($this->createUserRequest, $this->fakeUuid);
 
         $this->assertEquals($expectedUser, $response);
     }
 
-    public function testCreatesAUserSaveAUser(): void
+    public function testCreateAUserSavesAUser(): void
     {
         $createUser = new CreateUser($this->userRepository);
-        ($createUser)($this->createUserRequest);
-
         $expectedUser = User::create(
+            uuid: $this->fakeUuid,
             email: 'user@gmail.com',
             password: 'secret',
             username: 'firstUser',
@@ -72,9 +77,9 @@ class CreateUserTest extends TestCase
             country: 'France'
         );
 
-        $expectedUser->setId(1);
+        ($createUser)($this->createUserRequest, $this->fakeUuid);
 
-        $this->assertEquals($expectedUser, $this->userRepository->getUsers()[0]);
+        $this->assertEquals($expectedUser, $this->userRepository->getUserByUuid($this->fakeUuid));
     }
     public function testCreatingUserWithExistingEmailThrowsException(): void
     {
@@ -92,12 +97,12 @@ class CreateUserTest extends TestCase
         );
 
         $createUser = new CreateUser($this->userRepository);
-        ($createUser)($firstUserRequest);
+        ($createUser)($firstUserRequest, $this->fakeUuid);
 
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('User already exists with this email');
 
-        ($createUser)($this->createUserRequest);
+        ($createUser)($this->createUserRequest, $this->fakeUuid);
     }
 
 

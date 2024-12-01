@@ -6,6 +6,7 @@ namespace App\Adapters\Secondary;
 
 use App\Domain\Models\User;
 use App\Domain\Ports\Repository\UserRepositoryInterface;
+use Ramsey\Uuid\UuidInterface;
 
 final class FakeUserRepository implements UserRepositoryInterface
 {
@@ -13,7 +14,6 @@ final class FakeUserRepository implements UserRepositoryInterface
 
     public function save(User $user): void
     {
-        $user->setId(count($this->users) + 1);
         $this->users[] = $user;
     }
 
@@ -31,5 +31,19 @@ final class FakeUserRepository implements UserRepositoryInterface
         }
 
         return null;
+    }
+
+    public function getUserByUuid(UuidInterface $uuid): ?User
+    {
+        $results = array_filter($this->users, static fn (User $user) => $user->getUuid() === $uuid);
+        if (count($results) === 0) {
+            throw new \RuntimeException('Book not found');
+        }
+
+        if (count($results) > 1) {
+            throw new \RuntimeException('Multiple books found');
+        }
+
+        return $results[0];
     }
 }

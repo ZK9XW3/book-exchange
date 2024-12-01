@@ -9,6 +9,7 @@ use App\Domain\UseCases\AddBookToSell;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
+use Ramsey\Uuid\Uuid;
 
 final readonly class AddBookToSellController
 {
@@ -19,7 +20,7 @@ final readonly class AddBookToSellController
     #[Route('/add-book-to-sell', name: self::class, methods: ['POST'])]
     public function __invoke(#[MapRequestPayload] AddBookToSellRequest $request): JsonResponse
     {
-        $book = ($this->addBookToSell)($request);
+        $book = ($this->addBookToSell)($request, Uuid::uuid4());
 
         $response = [
             'message' => 'Book added successfully',

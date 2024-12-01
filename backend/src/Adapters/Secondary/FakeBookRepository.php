@@ -6,6 +6,7 @@ namespace App\Adapters\Secondary;
 
 use App\Domain\Models\Book;
 use App\Domain\Ports\Repository\BookRepositoryInterface;
+use Ramsey\Uuid\UuidInterface;
 
 final class FakeBookRepository implements BookRepositoryInterface
 {
@@ -21,8 +22,17 @@ final class FakeBookRepository implements BookRepositoryInterface
         return $this->books;
     }
 
-    public function getBookById(int $id): Book
+    public function getBookByUuid(UuidInterface $uuid): Book
     {
-        return $this->books[$id];
+        $results = array_filter($this->books, static fn (Book $book) => $book->getUuid() === $uuid);
+        if (count($results) === 0) {
+            throw new \RuntimeException('Book not found');
+        }
+
+        if (count($results) > 1) {
+            throw new \RuntimeException('Multiple books found');
+        }
+
+        return $results[0];
     }
 }

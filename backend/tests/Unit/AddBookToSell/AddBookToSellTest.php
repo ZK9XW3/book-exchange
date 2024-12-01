@@ -11,14 +11,18 @@ use PHPUnit\Framework\TestCase;
 
 class AddBookToSellTest extends TestCase
 {
+    private AddBookToSellRequest $request;
+
+    private FakeBookRepository $bookRepository;
+
     public function setUp(): void
     {
         $this->request = new AddBookToSellRequest(
             title: 'Le seigneur des anneaux',
             author: 'J.R.R. Tolkien',
-            isbn: '978-2-266-11156-0',
             condition: Condition::NEW,
-            price: 10
+            price: 10,
+            isbn: '978-2-266-11156-0'
         );
 
         $this->bookRepository = new FakeBookRepository();

@@ -12,6 +12,8 @@ class ReserveABookTest extends TestCase
 {
     private ReserveABookRequest $request;
 
+    private FakeTransactionRepository $transactionRepository;
+
     public function setUp(): void
     {
         $this->request = new ReserveABookRequest(
@@ -20,12 +22,12 @@ class ReserveABookTest extends TestCase
             buyerMessage: 'Je veux acheter ce livre'
         );
 
-        $this->transactionReposiory = new FakeTransactionRepository();
+        $this->transactionRepository = new FakeTransactionRepository();
     }
 
     public function testGetBookCreateTransactionWithStatusPending(): void
     {
-        $getBook = new ReserveABook($this->transactionReposiory);
+        $getBook = new ReserveABook($this->transactionRepository);
         $response = $getBook($this->request);
 
         $this->assertEquals('PENDING', $response->getStatusString());
@@ -33,10 +35,10 @@ class ReserveABookTest extends TestCase
 
     public function testGetBookSaveTransaction(): void
     {
-        $getBook = new ReserveABook($this->transactionReposiory);
+        $getBook = new ReserveABook($this->transactionRepository);
         $response = $getBook($this->request);
 
-        $transactions = $this->transactionReposiory->getTransactions();
+        $transactions = $this->transactionRepository->getTransactions();
 
         $this->assertCount(1, $transactions);
         $this->assertEquals($response, end($transactions));
@@ -44,10 +46,10 @@ class ReserveABookTest extends TestCase
 
     public function testGetBookSaveTransactionWithStatusPending(): void
     {
-        $getBook = new ReserveABook($this->transactionReposiory);
+        $getBook = new ReserveABook($this->transactionRepository);
         $getBook($this->request);
 
-        $transactions = $this->transactionReposiory->getTransactions();
+        $transactions = $this->transactionRepository->getTransactions();
 
         $this->assertEquals('PENDING', end($transactions)->getStatusString());
     }
